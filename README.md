@@ -35,10 +35,35 @@
 ![cube property](https://github.com/user-attachments/assets/ad85ba44-1fbb-4c8f-9b80-f84281f6b868)
 ![cube in scene](https://github.com/user-attachments/assets/2eefcac0-0627-4b7d-9f4a-a0a41fc48b5a)
 
+然后给 cube 加上物理属性，否则 gripper 会直接穿过它：
+
+选中 cube → 右边 Property 面板 → **+Add → Physics → Colliders Preset**
+<img width="782" height="809" alt="image" src="https://github.com/user-attachments/assets/bf9c4ffd-db6b-4153-a26a-055d106cd701" />
+
 ---
 
 ## 第四步：控制 Gripper
 
-**Window → Articulation Inspector**
+**Tools → Physics → Physics Inspector**
 
-按 ▶ Play，然后拖动 gripper joint slider 测试开合。
+在 Stage 树里选顶层的 robot prim（`so101_new_calib`），然后点 Physics Inspector 里的**刷新按钮（圆圈箭头）**，就能看到所有 joint 的 slider。
+<img width="2539" height="989" alt="image" src="https://github.com/user-attachments/assets/7f32b15a-6bc1-403b-9f7e-03196b9a1387" />
+
+
+按 **▶ Play**，然后：
+
+1. 用各个 joint slider 把 arm 摆到 cube 上方
+2. 把 `gripper` slider 拉到最大（完全打开）
+3. 慢慢移动 arm 到 cube 两侧
+4. 把 `gripper` slider 拉到最小（闭合）
+5. 抬起 arm，看 cube 会不会跟着走
+![Gripper Test Demo](https://github.com/Jeffaaay/isaac-sim-tutorial/blob/main/demo.gif?raw=true)
+---
+
+## 结论：gripper 测试结果
+
+两个 finger 接触面太小，对硬质 cube 摩擦力不够，很难稳定夹起。
+
+**这不是 RL 或者代码的问题，是 gripper 几何形状的物理限制。**
+
+对于需要可靠抓取硬质物体（比如围棋棋子）的场景，**吸盘（suction cup）是更好的选择**。
